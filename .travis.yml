@@ -1,0 +1,10 @@
+sudo: required
+dist: trusty
+language: generic
+before_install:
+  - sudo apt-get update -q
+  - sudo apt-get -y -t trusty-backports install lxd  
+  - sudo apt-get -y install lxd  
+  - sudo newgrp lxd
+  - sudo lxd init  
+script: false    
