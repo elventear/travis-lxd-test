@@ -22,7 +22,6 @@ lxc exec fedora -- echo "root:12345678" | chpasswd
 lxc exec fedora -- mkdir -p /root/.ssh && chmod og-rwx /root/.ssh
 lxc file push --uid=0 --gid=0 --mode=0400 ssh_keys/insecure.pub fedora/root/.ssh/authorized_keys
 
-IP=$(lxc list fedora --format=json | jq '.[0].state.network.eth0.addresses[] | select(.family=="inet") | .address' | tr -d \")
+lxc list fedora --format=json | jq '.[0].state.network.eth0.addresses[] | select(.family=="inet") | .address' | tr -d \" > FEDORA_IP.txt
 
-ssh root@$IP -i ssh_keys/insecure dnf -y upgrade 
 

@@ -9,6 +9,7 @@ set -e -x
 
 cd /vagrant
 sudo ./before_install.sh
+sudo ./script.sh
 SCRIPT
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
