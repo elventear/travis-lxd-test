@@ -34,3 +34,4 @@ lxc list fedora --format=json | jq '.[0].state.network.eth0.addresses[] | select
 
 touch ~/.ssh/known_hosts
 ssh-keyscan -H -t dsa,ecdsa,ed25519,rsa $(cat FEDORA_IP.txt) >> ~/.ssh/known_hosts
+cat ~/.ssh/known_hosts
