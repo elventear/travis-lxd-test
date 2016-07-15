@@ -33,4 +33,4 @@ lxc file push --uid=0 --gid=0 --mode=0400 ssh_keys/insecure.pub fedora/root/.ssh
 lxc list fedora --format=json | jq '.[0].state.network.eth0.addresses[] | select(.family=="inet") | .address' | tr -d \" > FEDORA_IP.txt
 
 touch ~/.ssh/known_hosts
-ssh-keyscan -H $(cat FEDORA_IP.txt) >> ~/.ssh/known_hosts
+ssh-keyscan -H -t dsa,ecdsa,ed25519,rsa $(cat FEDORA_IP.txt) >> ~/.ssh/known_hosts
