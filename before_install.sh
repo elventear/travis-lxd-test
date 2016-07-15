@@ -18,11 +18,13 @@ test -f ssh_keys/insecure || ssh-keygen -N "" -f ssh_keys/insecure
 
 lxc list -c n | grep -q fedora || lxc launch images:fedora/23/amd64 fedora
 
-# https://bugzilla.redhat.com/show_bug.cgi?id=1224908
-#lxc exec fedora -- dnf update -y 
-#lxc exec fedora -- dnf upgrade -y  
+# At startup time there is some funky business going on with fedora, where dnf is doing something
+# and locked. No matter what I have tried, nothing works except sleeping enough to give time dnf to settle down
+sleep 30
+
 lxc exec fedora -- bash -c 'while [ -f /var/cache/dnf/metadata_lock.pid ]; do sleep 1; done'
-lxc exec fedora -- dnf install -y openssh-server 
+# https://bugzilla.redhat.com/show_bug.cgi?id=1224908
+lxc exec fedora -- dnf install -y openssh-server | tee
 lxc exec fedora -- systemctl start sshd
 lxc exec fedora -- bash -c 'echo "root:12345678" | chpasswd'
 lxc exec fedora -- mkdir -p /root/.ssh && chmod og-rwx /root/.ssh
