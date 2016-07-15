@@ -2,6 +2,6 @@
 
 set -e -x 
 
-ssh -vvvv root@$(cat FEDORA_IP.txt) -i ssh_keys/insecure dnf -y upgrade 
-ssh -vvvv root@$(cat FEDORA_IP.txt) -i ssh_keys/insecure dnf -y install htop tmux  
+ssh root@$(cat FEDORA_IP.txt) -o UserKnownHostsFile=ssh_keys/known_hosts -i ssh_keys/insecure dnf -y upgrade 
+ssh root@$(cat FEDORA_IP.txt) -o UserKnownHostsFile=ssh_keys/known_hosts -i ssh_keys/insecure dnf -y install htop tmux  
 
